@@ -41,31 +41,37 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        print(type(self._neos))
-
         # TODO: What additional auxiliary data structures will be useful?
         self._by_designation = {}
+        self._by_name = {}
         self._populate_by_designation()
+        self._populate_approaches()
+        self._populate_by_name()
+
 
     def _populate_by_designation(self):
         for item in self._neos:
             self._by_designation[item.designation] = item
-        print(len(self._by_designation))
         return
 
         # TODO: Link together the NEOs and their close approaches.
 
-        #for ca in self._approaches:
-        #    designation = ca['_designation']
-        #    if designation in self._by_designation.keys():
-        #        self._by_designation[designation]['approach'].append(ca)
 
-        #self._by_name = {}
-        #for neo in self._neos:
-        #    if neo['name'] == "":
-        #        continue
-        #    else:
-        #        self._by_name[neo['name']] = neo
+    def _populate_approaches(self):
+        for ca in self._approaches:
+            if ca._designation in self._by_designation.keys():
+                self._by_designation[ca._designation].approaches.append(ca)
+                ca.neo = ca._designation
+                ca._designation = self._by_designation[ca._designation].fullname
+
+
+    def _populate_by_name(self):
+        for neo in self._neos:
+            if neo.name == "":
+                continue
+            else:
+                self._by_name[neo.name] = self._by_designation[neo.designation]
+
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
@@ -81,8 +87,11 @@ class NEODatabase:
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
         # TODO: Fetch an NEO by its primary designation.
+        try:
+            return self._by_designation[designation]
+        except KeyError:
+            return None
 
-        return #self._by_designation[designation]
 
     def get_neo_by_name(self, name):
         """Find and return an NEO by its name.
@@ -99,7 +108,12 @@ class NEODatabase:
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
         # TODO: Fetch an NEO by its name.
-        return #self._by_name[name]
+
+        try:
+            return self._by_name[name]
+        except KeyError:
+            print("The name entered is not valid. Please try again!")
+
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of filters.
