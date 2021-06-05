@@ -41,21 +41,31 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-
+        print(type(self._neos))
 
         # TODO: What additional auxiliary data structures will be useful?
+        self._by_designation = {}
+        self._populate_by_designation()
+
+    def _populate_by_designation(self):
+        for item in self._neos:
+            self._by_designation[item.designation] = item
+        print(len(self._by_designation))
+        return
 
         # TODO: Link together the NEOs and their close approaches.
 
-        for neo in self._neos:
-            pdes = neo['designation']
-            for cas in self._approaches:
-                if cas['_designation'] == pdes:
-                    neo.approaches.append(cas)
+        #for ca in self._approaches:
+        #    designation = ca['_designation']
+        #    if designation in self._by_designation.keys():
+        #        self._by_designation[designation]['approach'].append(ca)
 
-        item for item in self._neos
-
-
+        #self._by_name = {}
+        #for neo in self._neos:
+        #    if neo['name'] == "":
+        #        continue
+        #    else:
+        #        self._by_name[neo['name']] = neo
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
@@ -71,7 +81,8 @@ class NEODatabase:
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
         # TODO: Fetch an NEO by its primary designation.
-        return None
+
+        return #self._by_designation[designation]
 
     def get_neo_by_name(self, name):
         """Find and return an NEO by its name.
@@ -88,7 +99,7 @@ class NEODatabase:
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
         # TODO: Fetch an NEO by its name.
-        return None
+        return #self._by_name[name]
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of filters.
