@@ -82,6 +82,15 @@ class DistanceFilter(AttributeFilter):
         return approach.distance
 
 
+class VelocityFilter(AttributeFilter):
+
+    def __init__(self, op, value):
+        super().__init__(op, value)
+
+    @classmethod
+    def get(cls, approach):
+        return approach.velocity
+
 def create_filters(date=None, start_date=None, end_date=None,
                    distance_min=None, distance_max=None,
                    velocity_min=None, velocity_max=None,
@@ -117,8 +126,20 @@ def create_filters(date=None, start_date=None, end_date=None,
     :return: A collection of filters for use with `query`.
     """
     # TODO: Decide how you will represent your filters.
-    d_le = DistanceFilter(operator.le, distance_min)
-    return (d_le)
+    filters = []
+    if distance_min:
+        distance_min_filter = DistanceFilter(operator.ge, distance_min)
+        filters.append(distance_min_filter)
+    if distance_max:
+        distance_max_filter = DistanceFilter(operator.le, distance_max)
+        filters.append(distance_max_filter)
+    if velocity_min:
+        velocity_min_filter = VelocityFilter(operator.ge, velocity_min)
+        filters.append(velocity_min_filter)
+    if velocity_max:
+        velocity_max_filter = VelocityFilter(operator.le, velocity_max)
+        filters.append(velocity_max_filter)
+    return tuple(filters)
 
 
 def limit(iterator, n=None):
@@ -131,4 +152,13 @@ def limit(iterator, n=None):
     :yield: The first (at most) `n` values from the iterator.
     """
     # TODO: Produce at most `n` values from the given iterator.
-    return iterator
+    i = 0
+    if n is None:
+        for item in iterator:
+            yield item
+    else:
+        for item in iterator:
+            if i > n-1:
+                break
+            yield item
+            i += 1
