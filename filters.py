@@ -17,6 +17,7 @@ iterator.
 You'll edit this file in Tasks 3a and 3c.
 """
 import operator
+from itertools import islice
 
 
 class UnsupportedCriterionError(NotImplementedError):
@@ -199,13 +200,9 @@ def limit(iterator, n=None):
     :yield: The first (at most) `n` values from the iterator.
     """
     # TODO: Produce at most `n` values from the given iterator.
-    i = 0
-    if n is None:
+    if n == 0 or n is None:
         for item in iterator:
             yield item
     else:
-        for item in iterator:
-            if i > n-1:
-                break
+        for item in islice(iterator, n):
             yield item
-            i += 1
