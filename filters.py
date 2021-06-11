@@ -91,6 +91,35 @@ class VelocityFilter(AttributeFilter):
     def get(cls, approach):
         return approach.velocity
 
+
+class DiameterFilter(AttributeFilter):
+
+    def __init__(self, op, value):
+        super().__init__(op, value)
+
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.diameter
+
+class HazardousFilter(AttributeFilter):
+
+    def __init__(self, op, value):
+        super().__init__(op, value)
+
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.hazardous
+
+class DateFilter(AttributeFilter):
+
+    def __init__(self, op, value):
+        super().__init__(op, value)
+
+    @classmethod
+    def get(cls, approach):
+        return approach.time.date()
+
+
 def create_filters(date=None, start_date=None, end_date=None,
                    distance_min=None, distance_max=None,
                    velocity_min=None, velocity_max=None,
@@ -139,6 +168,24 @@ def create_filters(date=None, start_date=None, end_date=None,
     if velocity_max:
         velocity_max_filter = VelocityFilter(operator.le, velocity_max)
         filters.append(velocity_max_filter)
+    if diameter_min:
+        diameter_min_filter = DiameterFilter(operator.ge, diameter_min)
+        filters.append(diameter_min_filter)
+    if diameter_max:
+        diameter_max_filter = DiameterFilter(operator.le, diameter_max)
+        filters.append(diameter_max_filter)
+    if hazardous is not None:
+        hazardous_filter = HazardousFilter(operator.eq, hazardous)
+        filters.append(hazardous_filter)
+    if date:
+        on_date_filter = DateFilter(operator.eq, date)
+        filters.append(on_date_filter)
+    if start_date:
+        start_date_filter = DateFilter(operator.ge, start_date)
+        filters.append(start_date_filter)
+    if end_date:
+        end_date_filter = DateFilter(operator.le, end_date)
+        filters.append(end_date_filter)
     return tuple(filters)
 
 

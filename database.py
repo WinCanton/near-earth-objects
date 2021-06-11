@@ -12,6 +12,7 @@ data on NEOs and close approaches extracted by `extract.load_neos` and
 You'll edit this file in Tasks 2 and 3.
 """
 
+
 class NEODatabase:
     """A database of near-Earth objects and their close approaches.
 
@@ -20,6 +21,7 @@ class NEODatabase:
     help fetch NEOs by primary designation or by name and to help speed up
     querying for close approaches that match criteria.
     """
+
     def __init__(self, neos, approaches):
         """Create a new `NEODatabase`.
 
@@ -48,7 +50,6 @@ class NEODatabase:
         self._populate_approaches()
         self._populate_by_name()
 
-
     def _populate_by_designation(self):
         for item in self._neos:
             self._by_designation[item.designation] = item
@@ -58,11 +59,10 @@ class NEODatabase:
 
 
     def _populate_approaches(self):
-        for ca in self._approaches:
-            if ca._designation in self._by_designation.keys():
-                self._by_designation[ca._designation].approaches.append(ca)
-                ca.neo = ca._designation
-                ca._designation = self._by_designation[ca._designation].fullname
+        for approach in self._approaches:
+            if approach._designation in self._by_designation:
+                approach.neo = self._by_designation[approach._designation]
+                approach.neo.approaches.append(approach)
 
 
     def _populate_by_name(self):
@@ -71,7 +71,6 @@ class NEODatabase:
                 continue
             else:
                 self._by_name[neo.name] = self._by_designation[neo.designation]
-
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
@@ -91,7 +90,6 @@ class NEODatabase:
             return self._by_designation[designation]
         except KeyError:
             return None
-
 
     def get_neo_by_name(self, name):
         """Find and return an NEO by its name.
@@ -113,7 +111,6 @@ class NEODatabase:
             return self._by_name[name]
         except KeyError:
             print("The name entered is not valid. Please try again!")
-
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of filters.
