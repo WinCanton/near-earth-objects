@@ -12,6 +12,7 @@ You'll edit this file in Part 4.
 """
 import csv
 import json
+import datetime
 
 
 def write_to_csv(results, filename):
@@ -27,12 +28,13 @@ def write_to_csv(results, filename):
     fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s', 'designation', 'name', 'diameter_km', 'potentially_hazardous')
     # TODO: Write the results to a CSV file, following the specification in the instructions.
     with open(filename, 'w') as f:
+        print("Writing outfile ...")
         writer = csv.writer(f)
         writer.writerow(fieldnames)
         for result in results:
             row = result.time, result.distance, result.velocity, result.neo.designation, result.neo.name, result.neo.diameter, result.neo.hazardous
-            #row = result.time, result.distance, result.velocity
             writer.writerow(row)
+        print("Outfile created!")
 
 
 def write_to_json(results, filename):
@@ -49,6 +51,9 @@ def write_to_json(results, filename):
     # TODO: Write the results to a JSON file, following the specification in the instructions.
     output = []
     with open(filename, 'w') as f:
+        print("Writing outfile ...")
         for result in results:
-            output.append({"datetime_utc": result.time, "distance_au": result.distance, "velocity_km_s": result.velocity, "designation": result.neo.designation, "name": result.neo.name, "diameter_km": result.neo.diameter, "potentially_hazardous": result.neo.hazardous})
-            json.dump(output, f, indent=2, default=str)
+            row = {"datetime_utc": result.time.strftime("%Y-%m-%d %H:%M"), "distance_au": result.distance, "velocity_km_s": result.velocity, "neo": {"designation": result.neo.designation, "name": result.neo.name, "diameter_km": result.neo.diameter, "potentially_hazardous": result.neo.hazardous}}
+            output.append(row)
+        json.dump(output, f, indent=2)
+        print("Outfile created!")
