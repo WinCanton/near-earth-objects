@@ -74,50 +74,113 @@ class AttributeFilter:
 
 
 class DistanceFilter(AttributeFilter):
+    """A class to filter approaches based on distance.
+
+    The class inherit from its parent, the AttributeFilter class.
+    This class also override it's parent's get classmethod
+    in order to provide filter functionality for distance attribute.
+
+    """
 
     def __init__(self, op, value):
+        """Construct the filter based on provided operator and value for comparison
+
+        """
         super().__init__(op, value)
 
     @classmethod
     def get(cls, approach):
+        """An override of parent's classmethod to provide the desired attribute
+
+        """
         return approach.distance
 
 
 class VelocityFilter(AttributeFilter):
+    """A class to filter approaches based on velocity.
+
+    The class inherit from its parent, the AttributeFilter class.
+    This class also override it's parent's get classmethod
+    in order to provide filter functionality for velocity attribute.
+
+    """
 
     def __init__(self, op, value):
+        """Construct the filter based on provided operator and value for comparison
+
+        """
         super().__init__(op, value)
 
     @classmethod
     def get(cls, approach):
+        """An override of parent's classmethod to provide the desired attribute
+
+        """
         return approach.velocity
 
 
 class DiameterFilter(AttributeFilter):
+    """A class to filter approaches based on diameter.
 
+    The class inherit from its parent, the AttributeFilter class.
+    This class also override it's parent's get classmethod
+    in order to provide filter functionality for diameter attribute.
+
+    """
     def __init__(self, op, value):
+        """Construct the filter based on provided operator and value for comparison
+
+        """
         super().__init__(op, value)
 
     @classmethod
     def get(cls, approach):
+        """An override of parent's classmethod to provide the desired attribute
+
+        """
         return approach.neo.diameter
 
 class HazardousFilter(AttributeFilter):
+    """A class to filter approaches based on neo's hazardous property.
+
+    The class inherit from its parent, the AttributeFilter class.
+    This class also override it's parent's get classmethod
+    in order to provide filter functionality for hazardous attribute.
+
+    """
 
     def __init__(self, op, value):
+        """Construct the filter based on provided operator and value for comparison
+
+        """
         super().__init__(op, value)
 
     @classmethod
     def get(cls, approach):
+        """An override of parent's classmethod to provide the desired attribute
+
+        """
         return approach.neo.hazardous
 
 class DateFilter(AttributeFilter):
+    """A class to filter approaches based on the date of an approach.
 
+    The class inherit from its parent, the AttributeFilter class.
+    This class also override it's parent's get classmethod
+    in order to provide filter functionality for approach's date attribute.
+
+    """
     def __init__(self, op, value):
+        """Construct the filter based on provided operator and value for comparison
+
+        """
         super().__init__(op, value)
 
     @classmethod
     def get(cls, approach):
+        """An override of parent's classmethod to provide the desired attribute
+
+        """
         return approach.time.date()
 
 
@@ -155,7 +218,6 @@ def create_filters(date=None, start_date=None, end_date=None,
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
     filters = []
     if distance_min:
         distance_min_filter = DistanceFilter(operator.ge, distance_min)
@@ -199,7 +261,6 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
     if n == 0 or n is None:
         for item in iterator:
             yield item

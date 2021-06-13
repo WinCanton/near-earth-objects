@@ -42,8 +42,6 @@ class NEODatabase:
         """
         self._neos = neos
         self._approaches = approaches
-
-        # TODO: What additional auxiliary data structures will be useful?
         self._by_designation = {}
         self._by_name = {}
         self._populate_by_designation()
@@ -55,15 +53,11 @@ class NEODatabase:
             self._by_designation[item.designation] = item
         return
 
-        # TODO: Link together the NEOs and their close approaches.
-
-
     def _populate_approaches(self):
         for approach in self._approaches:
             if approach._designation in self._by_designation:
                 approach.neo = self._by_designation[approach._designation]
                 approach.neo.approaches.append(approach)
-
 
     def _populate_by_name(self):
         for neo in self._neos:
@@ -85,7 +79,6 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
         try:
             return self._by_designation[designation]
         except KeyError:
@@ -105,8 +98,6 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
-
         try:
             return self._by_name[name]
         except KeyError:
@@ -126,7 +117,6 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
             filter_result = [item(approach) for item in filters]
             if sum(filter_result) == len(filters):
