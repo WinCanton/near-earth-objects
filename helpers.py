@@ -21,10 +21,10 @@ def cd_to_datetime(calendar_date):
 
         2020-Dec-31 12:00
 
-    This will become the Python object `datetime.datetime(2020, 12, 31, 12, 0)`.
+    This will become the Python object `datetime.datetime(2020, 12, 31, 12, 0)`
 
     :param calendar_date: A calendar date in YYYY-bb-DD hh:mm format.
-    :return: A naive `datetime` corresponding to the given calendar date and time.
+    :return: A naive `datetime` corresponding to the given calendar date & time
     """
     return datetime.datetime.strptime(calendar_date, "%Y-%b-%d %H:%M")
 
@@ -34,7 +34,7 @@ def datetime_to_str(dt):
 
     The default string representation of a datetime includes seconds; however,
     our data isn't that precise, so this function only formats the year, month,
-    date, hour, and minute values. Additionally, this function provides the date
+    date, hour, and minute values. Also, this function provides the date
     in the usual ISO 8601 YYYY-MM-DD format to avoid ambiguities with
     locale-specific month names.
 
