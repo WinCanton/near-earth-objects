@@ -82,7 +82,7 @@ If you'd like to explore individual NEOs in more detail (and perhaps interpret a
 
 [1]: https://cneos.jpl.nasa.gov/about/basics.html
 
-### Close Approach Dataset
+### Close Approach Dataset - 
 
 NASA's Center for Near-Earth Object Studies (CNEOS) also provides data about close approaches of NEOs to Earth. A close approach occurs when an NEO's orbit path brings it near Earth - although, "near" in astronomical terms can be quite far in human-scale units, such as kilometers. Instead of kilometers, astronomical distances within the solar system are often measured with the astronomical unit (au) - the mean distance between the Earth and the sun - although sometimes you'll see distances measured with the lunar distance (ld) - the mean distance between the Earth and the moon - or even plain old kilometers.
 
