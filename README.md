@@ -4,7 +4,7 @@ This project uses Python to develop a small utilitiy that can be used to search 
 
 Sceen shot:
 
-[gif in action]
+![](res/neos-sbdb-query.png)
 
 ## Overview
 
@@ -12,10 +12,10 @@ At a high-level, this Python code implements a command-line tool to inspect and 
 
 Concretely, it:
   - reads data from both a CSV file and a JSON file, 
-  - convert that data into structured Python objects, 
-  - perform filtering operations on the data, 
-  - limit the size of the result set, and 
-  - write the results to a file in a structured format, such as CSV or JSON.
+  - converts that data into structured Python objects, 
+  - performs filtering operations on the data, 
+  - limits the size of the result set, and 
+  - writes the results to a file in a structured format, such as CSV or JSON.
 
 When complete, user will be able to inspect the properties of the near-Earth objects in the data set and query the data set of close approaches to Earth using any combination of the following filters:
 
